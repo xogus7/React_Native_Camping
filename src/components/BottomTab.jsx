@@ -1,17 +1,21 @@
 import React, { useRef } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Image  } from 'react-native';
-import { articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon, 
-    communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon } from '@icons/bottomtab'
+import { View, TouchableOpacity, Animated, StyleSheet, Image, useWindowDimensions } from 'react-native';
+import {
+    articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon,
+    communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon
+} from '@icons/bottomtab'
+
 const bottomTabBackgroundImage = require('@images/bottomtab_background.png')
 
 const BottomTab = ({ state, navigation, insets, descriptors }) => {
+
     const tab1Value = useRef(new Animated.Value(0)).current;
     const tab2Value = useRef(new Animated.Value(0)).current;
     const tab3Value = useRef(new Animated.Value(0)).current;
     const tab4Value = useRef(new Animated.Value(0)).current;
     const tab5Value = useRef(new Animated.Value(0)).current;
 
-    const scaleAnimated = (value, animatedValue) => 
+    const scaleAnimated = (value, animatedValue) =>
         Animated.timing(animatedValue, {
             useNativeDriver: true,
             toValue: value,
@@ -26,8 +30,11 @@ const BottomTab = ({ state, navigation, insets, descriptors }) => {
     };
 
     return (
-        <View style={[styles.bottomTabBarWrapper, {paddingBottom: insets.bottom}]}>
-            <Image source={bottomTabBackgroundImage} style={styles.bottomTabBackground}/>
+        <View style={[styles.bottomTabBarWrapper]}>
+            <Image source={bottomTabBackgroundImage}
+                style={styles.bottomTabBackground}
+                resizeMode='contain'
+            />
             {
                 state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
@@ -47,7 +54,7 @@ const BottomTab = ({ state, navigation, insets, descriptors }) => {
                                 return bool ? settingOnIcon : settingOffIcon;
                         }
                     }
-                    
+
                     const onPress = () => {
                         const event = navigation.emit({
                             type: 'tabPress',
@@ -59,34 +66,36 @@ const BottomTab = ({ state, navigation, insets, descriptors }) => {
                             navigation.navigate(route.name);
                         }
 
-                        scaleAnimated(1, animatedOf).start(({ finished}) => {
+                        scaleAnimated(1, animatedOf).start(({ finished }) => {
                             if (finished) {
                                 scaleAnimated(0, animatedOf).start();
                             }
                         })
                     }
                     return (
-                        <TouchableOpacity 
+                        <TouchableOpacity
                             key={index}
                             activeOpacity={0.7}
                             onPress={onPress}
                             style={{ flex: 1, alignItems: 'center' }}>
                             <Animated.Image
-                            source={iconFlag(isFocused)}
-                            resizeMode={'contain'}
-                            style={{
-                                width: 24,
-                                height: 24,
-                                transform: [
-                                    {
-                                        scale: animatedOf.interpolate({
-                                            inputRange: [0, 1],
-                                            outputRange: [1, 0.9],
-                                        }),
-                                    },
-                                ],
-                            }}
-                        />
+                                source={iconFlag(isFocused)}
+                                resizeMode={'contain'}
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    marginTop: 24,
+                                    marginBottom: 16,
+                                    transform: [
+                                        {
+                                            scale: animatedOf.interpolate({
+                                                inputRange: [0, 1],
+                                                outputRange: [1, 0.9],
+                                            }),
+                                        },
+                                    ],
+                                }}
+                            />
                         </TouchableOpacity>
                     )
                 })
@@ -101,20 +110,12 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         justifyContent: 'space-between',
-        borderStyle: 'solid',
-        borderTopWidth: 0.5,
-        borderLeftWidth: 0.5,
-        borderRightWidth: 0.5,
-        borderColor: '#EEE',
-        backgroundColor: '#FFF',
-        paddingTop: 5,
         zIndex: 10
     },
     bottomTabBackground: {
-        width,
+        width: '100%',
         height: 80,
         position: 'absolute',
-        bottom: 0,
         zIndex: -1
     }
 })
