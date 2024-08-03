@@ -1,53 +1,78 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import { COLOR } from '@styles/color';
 
-const settingsIcon = require('@icons/settings.png');
-const alarm = require('@icons/alarm.png');
-const backArrow = require('@icons/back_arrow.png');
+const backIcon = require('@icons/back.png')
+const menuIcon = require('@icons/menu.png')
+const searchIcon = require('@icons/search.png')
+const bookmarkIcon = require('@icons/bookmark.png')
+const editIcon = require('@icons/edit.png')
 
-const BasicHeader = ({ title, component, rightButtonHide }) => {
-    const navigation = useNavigation();
-
+const BasicHeader = ({ title, leftButtonName, rightButtonName,
+    rightImageUrl, onPressLeftButton, onPressRightButton }) => {
+    
+    const renderImage = (name) => {
+        switch(name) {
+            case 'back': return backIcon;
+            case 'menu': return menuIcon;
+            case 'search': return searchIcon;
+            case 'bookmark': return bookmarkIcon;
+            case 'edit': return editIcon;
+            default: return ;
+        }
+    }
     return (
         <View style={styles.headerWrapper}>
-            <TouchableOpacity onPress={() => navigation.goBack()}>
-                <Image source={backArrow} style={styles.backButton} />
-            </TouchableOpacity>
+            {leftButtonName && 
+                <TouchableOpacity onPress={onPressLeftButton} style={styles.leftButton}>
+                    <Image source={renderImage(leftButtonName)} style={{width: '100%', height: '100%'}} />
+                </TouchableOpacity>
+            }
             {title && <Text style={styles.headerTitle}>{title}</Text>}
-            {component}
-            {!rightButtonHide && <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8, marginRight: 8 }}>
-                <TouchableOpacity>
-                    <Image source={settingsIcon} style={{ width: 32, height: 32 }} />
+            {rightButtonName &&
+                <TouchableOpacity onPress={onPressRightButton} style={styles.rightButton} >
+                <Image source={renderImage(rightButtonName)} style={{width: '100%', height: '100%'}}/>
                 </TouchableOpacity>
-                <TouchableOpacity>
-                    <Image source={alarm} style={{ width: 32, height: 32 }} />
+            }
+            {rightImageUrl &&
+                <TouchableOpacity onPress={onPressRightButton} style={styles.rightButton} >
+                <Image source={{uri: rightImageUrl}} style={{width: 45, height: 45}} />
                 </TouchableOpacity>
-            </View>}
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     headerWrapper: {
-        backgroundColor: '#FFF',
-        paddingHorizontal: 16,
-        paddingVertical: 10,
+        height: 65,
+        marginTop: 28,
         flexDirection: 'row',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         alignItems: 'center',
-        borderBottomWidth: 1,
-        borderBottomColor: '#EAEAEA'
     },
-    backButton: {
-        width: 40,
-        height: 40
+    leftButton: {
+        position: 'absolute',
+        width: 65,
+        height: 65,
+        left: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    rightButton: {
+        position: 'absolute',
+        width: 65,
+        height: 65,
+        right: 16,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
     headerTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
+        fontWeight: '700',
+        lineHeight: 32,
         textAlign: 'center',
-        color: '#000'
+        color: COLOR.PURPLE
     },
 })
 
