@@ -10,7 +10,7 @@ module.exports = {
           "@images": "./src/assets/images",
           "@components": "./src/components",
           "@pages": "./src/pages",
-
+          "@styles": "./src/styles",
         },
       },
     ],
