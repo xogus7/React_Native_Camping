@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
+import { FlatList, Image, SafeAreaView, Text, View, useWindowDimensions } from 'react-native';
 import { COLOR } from '@styles/color';
 import { postAuth } from '@libs/apis';
+import TextButton from '@components/TextButton';
 
 const Introduction = ({ navigation }) => {
     const { width } = useWindowDimensions();
@@ -38,7 +39,7 @@ const Introduction = ({ navigation }) => {
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={{ flex: 1 }}>
-                {/* Carousel */}
+                {/* Onboarding */}
                 <FlatList
                     data={introductionData}
                     renderItem={renderItem}
@@ -54,7 +55,6 @@ const Introduction = ({ navigation }) => {
                     onContentSizeChange={w => setItemWidth(w / introductionData.length)}
                 />
 
-                {/* Onboarding */}
                 {(currentIndex != 3) ?
                     <View style={{
                         flexDirection: 'row',
@@ -109,24 +109,6 @@ const Indicator = ({ currentIndex, length }) => {
         </View>
     );
 };
-
-const TextButton = ({ text, backgroundColor, onPress, width, height }) => {
-    return (
-        <TouchableOpacity
-            style={{
-                width, height,
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor,
-                borderRadius: 8,
-            }}
-            onPress={onPress}>
-            <Text style={{ color: COLOR.PURPLE, fontSize: 17, fontWeight: '700' }}>
-                {text}
-            </Text>
-        </TouchableOpacity>
-    );
-}
 
 const HighlightedText = ({ text }) => {
     return <Text style={{ color: COLOR.LIGHT_ORANGE }}>{text}</Text>;
