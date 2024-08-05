@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { FlatList, Image, SafeAreaView, Text, TouchableOpacity, View, useWindowDimensions } from 'react-native';
-import { COLOR } from '@styles/color.jsx';
+import { COLOR } from '@styles/color';
+import { postAuth } from '@libs/apis';
 
 const Introduction = ({ navigation }) => {
     const { width } = useWindowDimensions();
     const [itemWidth, setItemWidth] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onPressSkipButton = () => { navigation.navigate('MainTab') };
+    const onPressSkipButton = () => { 
+        postAuth();
+        navigation.navigate('MainTab'); };
     const onPressNextButton = () => { if (currentIndex < 3) setCurrentIndex(currentIndex + 1) };
     const onPressStartButton = () => { navigation.navigate('MainTab') };
     const indexToOffset = () => { return { x: currentIndex * itemWidth, y: 0 } };

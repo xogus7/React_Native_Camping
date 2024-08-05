@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { COLOR } from '@styles/color';
 
-const backIcon = require('@icons/back.png')
+const backIcon = require('@icons/back_arrow.png')
 const menuIcon = require('@icons/menu.png')
 const searchIcon = require('@icons/search.png')
 const bookmarkIcon = require('@icons/bookmark.png')
@@ -10,33 +10,33 @@ const editIcon = require('@icons/edit.png')
 
 const BasicHeader = ({ title, leftButtonName, rightButtonName,
     rightImageUrl, onPressLeftButton, onPressRightButton }) => {
-    
+
     const renderImage = (name) => {
-        switch(name) {
+        switch (name) {
             case 'back': return backIcon;
             case 'menu': return menuIcon;
             case 'search': return searchIcon;
             case 'bookmark': return bookmarkIcon;
             case 'edit': return editIcon;
-            default: return ;
+            default: return;
         }
     }
     return (
         <View style={styles.headerWrapper}>
-            {leftButtonName && 
+            {leftButtonName &&
                 <TouchableOpacity onPress={onPressLeftButton} style={styles.leftButton}>
-                    <Image source={renderImage(leftButtonName)} style={{width: '100%', height: '100%'}} />
+                    <Image source={renderImage(leftButtonName)} style={{ width: '100%', height: '100%' }} />
                 </TouchableOpacity>
             }
             {title && <Text style={styles.headerTitle}>{title}</Text>}
             {rightButtonName &&
                 <TouchableOpacity onPress={onPressRightButton} style={styles.rightButton} >
-                <Image source={renderImage(rightButtonName)} style={{width: '100%', height: '100%'}}/>
+                    <Image source={renderImage(rightButtonName)} style={{ width: '100%', height: '100%' }} />
                 </TouchableOpacity>
             }
             {rightImageUrl &&
                 <TouchableOpacity onPress={onPressRightButton} style={styles.rightButton} >
-                <Image source={{uri: rightImageUrl}} style={{width: 45, height: 45}} />
+                    <Image source={{ uri: rightImageUrl }} style={{ width: 45, height: 45 }} />
                 </TouchableOpacity>
             }
         </View>
