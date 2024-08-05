@@ -1,6 +1,7 @@
 module.exports = {
   presets: ['module:@react-native/babel-preset'],
   plugins: [
+    ['module:react-native-dotenv'],
     [
       'module-resolver',
       {
@@ -11,6 +12,9 @@ module.exports = {
           "@components": "./src/components",
           "@pages": "./src/pages",
           "@styles": "./src/styles",
+          "@libs": "./src/libs",
+          "@hooks": "./src/hooks",
+          "@utils": "./src/utils",
         },
       },
     ],
