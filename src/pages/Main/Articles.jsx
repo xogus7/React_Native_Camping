@@ -5,6 +5,7 @@ import Banner from "@components/Banner";
 import useArticles from "@hooks/useArticles";
 
 import { bookmarkIcon, chevronDownIcon } from '@icons'
+import { dateToString } from "@utils/dateFormat";
 const bannerImage = require('@images/splash.jpeg');
 const defaultThumbnailImage = require('@images/default_article_thumb.png')
 
@@ -44,7 +45,7 @@ const Articles = ({ navigation }) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ color: COLOR.PURPLE, opacity: 0.5 }}>
-                            {item.createDate}
+                            {dateToString(item.createDate)}
                         </Text>
                         <Image source={bookmarkIcon} style={{ width: 32, height: 32 }} />
                     </View>
