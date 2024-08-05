@@ -1,12 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
 import { COLOR } from '@styles/color';
-
-const backIcon = require('@icons/back_arrow.png')
-const menuIcon = require('@icons/menu.png')
-const searchIcon = require('@icons/search.png')
-const bookmarkIcon = require('@icons/bookmark.png')
-const editIcon = require('@icons/edit.png')
+import { backIcon, menuIcon, searchIcon, bookmarkIcon, editIcon } from '@icons'
 
 const BasicHeader = ({ title, leftButtonName, rightButtonName,
     rightImageUrl, onPressLeftButton, onPressRightButton }) => {

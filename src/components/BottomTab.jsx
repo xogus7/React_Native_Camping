@@ -1,9 +1,9 @@
 import React, { useRef } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Image, useWindowDimensions } from 'react-native';
+import { View, TouchableOpacity, Animated, StyleSheet, Image } from 'react-native';
 import {
     articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon,
     communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon
-} from '@icons/bottomtab'
+} from '@icons'
 
 const bottomTabBackgroundImage = require('@images/bottomtab_background.png')
 
