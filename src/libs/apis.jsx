@@ -10,6 +10,7 @@ export const getCampsiteData = async (pageNo) => {
             MobileApp: 'Camping',
             serviceKey: process.env.REACT_APP_GO_CAMPING_API_SERVICE_KEY,
             _type: 'json',
+            
         });
         return data.response.body.items.item;
     } catch (error) {
@@ -35,6 +36,33 @@ export const getArticle = async (sortType) => {
         const { data } = await swaggerInstance.get('/article', {
             sortType: sortType
         });
+        return data.result;
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+export const getCommunity = async () => {
+    try {
+        const { data } = await swaggerInstance.get('/community');
+        return data.result.content;
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+export const putCommunityLike = async (communityId) => {
+    try {
+        const { data } = await swaggerInstance.put('/community/communityId/like');
+        return data.result;
+    } catch (error) {
+        console.warn(error);
+    }
+}
+
+export const getAccountsInfo = async () => {
+    try {
+        const { data } = await swaggerInstance.get('/accounts/info');
         return data.result;
     } catch (error) {
         console.warn(error);

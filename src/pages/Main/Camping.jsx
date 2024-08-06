@@ -1,19 +1,25 @@
-import { FlatList, Image, Pressable, RefreshControl, SafeAreaView, Text, View } from "react-native";
+import { FlatList, Image, Pressable, RefreshControl, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { useCallback, useState } from "react";
 
 import { COLOR } from "@styles/color";
 import BasicHeader from "@components/BasicHeader";
 import useCampsiteList from "@hooks/useCampsiteList";
+import SortBy from "@components/SortBy";
+import SortModal from "@components/SortModal";
+import { getDistance } from "@utils/getDistance";
 
 const Camping = ({ navigation }) => {
     const [refreshing, setRefreshing] = useState(false);
-    const { campsiteList, loadNextPageCampsiteList, refreshCampsiteList } =
-        useCampsiteList();
+    const [isVisible, setIsVisible] = useState(false);
+    const { campsiteList, loadNextPageCampsiteList, refreshCampsiteList,
+        sortBy, setSortBy, sortTypeList } = useCampsiteList();
+    const defaultThumbnailImage = require('@images/default_article_thumb.png')
+    const coords1 = { latitude: 37.590719, longitude: 127.1234262};
 
     const renderItem = useCallback(({ item }) => {
-        const onPressCampsiteInfo = () =>
-            navigation.navigate('CampingDetail', item);
-
+        const onPressCampsiteInfo = () => navigation.navigate('CampingDetail', item);
+        const coords2 = {latitude: item.mapY, longitude: item.mapX};
+        const distance = getDistance(coords1, coords2).toFixed(1);
         return (
             <Pressable
                 style={{
@@ -44,9 +50,18 @@ const Camping = ({ navigation }) => {
                     {/* 썸네일 */}
                     <Image
                         style={{ borderRadius: 8, height: 150, width: '100%' }}
-                        source={{ uri: item.firstImageUrl }}
+                        source={item.firstImageUrl ?
+                            { uri: item.firstImageUrl } : defaultThumbnailImage}
                         resizeMode="cover"
                     />
+                    {!item.firstImageUrl && <Text
+                        style={{
+                            position: 'absolute',
+                            color: COLOR.WHITE,
+                            right: 8,
+                            bottom: 8,
+                            zIndex: 1 
+                    }}>가상 이미지 입니다.</Text>}
                 </View>
 
                 <View style={{ flexDirection: 'row', gap: 8, marginVertical: 8}}>
@@ -60,10 +75,15 @@ const Camping = ({ navigation }) => {
                     </Text>
                 </View>
                 {/* 야영장명 */}
+                <View style={{flexDirection: 'row', justifyContent: 'space-between',alignItems: 'center'}}>
                 <Text style={{ fontWeight: 'bold', color: '#707070', fontSize: 18 }}>
                     {item.facltNm}
                 </Text>
-
+                {/* 캠핑장까지 거리 */}
+                <Text  style={{ fontSize: 13, fontWeight: '700', color: '#707070' }}>
+                    {`${distance}km`}
+                </Text>
+                </View>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 28 }}>
                     {/* 주소 */}
                     <Text style={{ fontSize: 13, fontWeight: '700' }}>
@@ -88,9 +108,14 @@ const Camping = ({ navigation }) => {
         loadNextPageCampsiteList();
     };
 
+    const onPressSort = () => {
+        setIsVisible(true)
+    }
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE_ORANGE }}>
             <BasicHeader title="캠핑 투게더" leftButtonName="menu" rightButtonName="search" />
+            {/* Sort By */}
+            <SortBy sortBy={sortBy} onPress={onPressSort}/>
             {/* List */}
             <FlatList
                 style={{ marginHorizontal: 16 }}
@@ -102,6 +127,17 @@ const Camping = ({ navigation }) => {
                 renderItem={renderItem}
                 onEndReached={onEndReached}
                 onEndReachedThreshold={0.1}
+            />
+            <SortModal
+                isVisible={isVisible}
+                okText={'Save'}
+                noText={'Cancel'}
+                headerTitle={'정렬'}
+                onPressOk={() => setIsVisible(false)}
+                onPressNo={() => setIsVisible(false)}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                list={sortTypeList}
             />
         </SafeAreaView>
     );

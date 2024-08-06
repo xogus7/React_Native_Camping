@@ -13,7 +13,7 @@ const Introduction = ({ navigation }) => {
         postAuth();
         navigation.navigate('MainTab'); };
     const onPressNextButton = () => { if (currentIndex < 3) setCurrentIndex(currentIndex + 1) };
-    const onPressStartButton = () => { navigation.navigate('MainTab') };
+    const onPressStartButton = () => { navigation.navigate('Login') };
     const indexToOffset = () => { return { x: currentIndex * itemWidth, y: 0 } };
 
     const renderItem = ({ item }) => {

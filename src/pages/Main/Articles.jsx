@@ -1,17 +1,25 @@
 import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { COLOR } from "@styles/color";
 import BasicHeader from "@components/BasicHeader";
-import Banner from "@components/Banner";
+import { Banner } from "@components/Banner";
 import useArticles from "@hooks/useArticles";
 
 import { bookmarkIcon, chevronDownIcon } from '@icons'
 import { dateToString } from "@utils/dateFormat";
+import SortBy from "@components/SortBy";
+import { useEffect, useState } from "react";
+import SortModal from "@components/SortModal";
 const bannerImage = require('@images/splash.jpeg');
 const defaultThumbnailImage = require('@images/default_article_thumb.png')
 
 
 const Articles = ({ navigation }) => {
-    const { articles, sortBy } = useArticles();
+    const { articles, sortBy, setSortBy, sortTypeList, getArticleList } = useArticles();
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(()=> {
+        getArticleList(sortBy)
+    }, [sortBy])
 
     const renderItem = ({ item }) => {
         const onPressArticle = () =>
@@ -54,13 +62,14 @@ const Articles = ({ navigation }) => {
         );
     };
 
-
+    const onPressSort = () => {
+        setIsVisible(true)
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE_ORANGE }}>
             <BasicHeader title="아티클"
                 leftButtonName="menu" rightButtonName="search" />
-
             <Banner
                 title={'각종 캠핑 정보'}
                 titleFontSize={36}
@@ -69,13 +78,7 @@ const Articles = ({ navigation }) => {
             />
 
             {/* Sort By */}
-            <View style={styles.sortByContainer}>
-                <Text style={styles.sortByText}>Sort By:</Text>
-                <TouchableOpacity style={styles.sortButton}>
-                    <Text>{sortBy.name}</Text>
-                    <Image source={chevronDownIcon} style={{ width: 16, height: 16 }} />
-                </TouchableOpacity>
-            </View>
+            <SortBy sortBy={sortBy} onPress={onPressSort}/>
 
 
             {/* List */}
@@ -86,30 +89,19 @@ const Articles = ({ navigation }) => {
                 renderItem={renderItem}
                 scrollEventThrottle={1}
             />
+            <SortModal
+                isVisible={isVisible}
+                okText={'Save'}
+                noText={'Cancel'}
+                headerTitle={'정렬'}
+                onPressOk={() => setIsVisible(false)}
+                onPressNo={() => setIsVisible(false)}
+                sortBy={sortBy}
+                setSortBy={setSortBy}
+                list={sortTypeList}
+            />
         </SafeAreaView>
     );
 };
-
-const styles = StyleSheet.create({
-    sortByContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        gap: 16,
-        marginHorizontal: 16,
-        marginVertical: 18,
-    },
-    sortByText: { flex: 1, color: COLOR.PURPLE },
-    sortButton: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        paddingHorizontal: 12,
-        paddingVertical: 4,
-        borderRadius: 4,
-        backgroundColor: COLOR.WHITE,
-        alignItems: 'center',
-    },
-});
 
 export default Articles;

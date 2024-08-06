@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Image, SafeAreaView } from 'react-native';
 
 const splashImage = require('@images/splash.jpeg')
+
 const Splash = ({ navigation }) => {
 
     useEffect(() => {
@@ -11,7 +12,7 @@ const Splash = ({ navigation }) => {
     }, [])
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF'}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: '#FFF' }}>
             <View style={{ justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={splashImage} />
             </View>

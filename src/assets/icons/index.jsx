@@ -14,6 +14,10 @@ const moreIcon = require('@icons/settings/more.png');
 const notiIcon = require('@icons/settings/noti.png');
 const phoneIcon = require('@icons/settings/phone.png');
 
+const medalIcon = require('@icons/settings/profile/medal.png');
+const premiumIcon = require('@icons/settings/profile/premium.png');
+const clockIcon = require('@icons/settings/profile/clock.png');
+
 const backIcon = require('@icons/back_arrow.png')
 const menuIcon = require('@icons/menu.png')
 const searchIcon = require('@icons/search.png')
@@ -23,10 +27,15 @@ const editIcon = require('@icons/edit.png')
 const chevronDownIcon = require('@icons/chevron_down.png')
 const chevronRightIcon = require('@icons/chevron_right.png')
 
+const likeOnIcon = require('@icons/like_on.png')
+const replyIcon = require('@icons/reply.png')
+
 export {
     articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon, 
     communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon,
     alramIcon, checkIcon, listIcon, moreIcon, notiIcon, phoneIcon,
+    medalIcon, premiumIcon, clockIcon,
     backIcon, menuIcon, searchIcon, bookmarkIcon, editIcon,
     chevronDownIcon, chevronRightIcon,
+    likeOnIcon, replyIcon,
 } 

@@ -9,6 +9,10 @@ import Camping from '@pages/Main/Camping';
 import Articles from '@pages/Main/Articles';
 import Community from '@pages/Main/Community';
 import Settings from '@pages/Main/Settings';
+import Login from '@pages/Main/Login';
+import Register from '@pages/Main/Register';
+import ProfileDetail from '@pages/Main/ProfileDetail';
+import CampingDetail from '@pages/Main/CampingDetail';
 
 
 const Stack = createNativeStackNavigator();
@@ -34,6 +38,10 @@ const Router = () => {
       screenOptions={{ headerShown: false, gestureEnabled: false }}>
       <Stack.Screen name="Splash" component={Splash} />
       <Stack.Screen name="Introduction" component={Introduction} />
+      <Stack.Screen name="Login" component={Login} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="CampingDetail" component={CampingDetail} />
+      <Stack.Screen name="ProfileDetail" component={ProfileDetail} />
       <Stack.Screen name="MainTab" component={MainTab} />
     </Stack.Navigator>
   );
