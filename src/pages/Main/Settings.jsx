@@ -1,38 +1,52 @@
+import React, {useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
 import {COLOR} from '@styles/color';
 import BasicHeader from '@components/BasicHeader';
 import {Banner} from '@components/Banner';
 import TextButton from '@components/TextButton';
 import SettingButton from '@components/SettingButton';
-
-import { alramIcon, checkIcon, listIcon, moreIcon, notiIcon, phoneIcon,
+import {
+  alramIcon,
+  checkIcon,
+  listIcon,
+  moreIcon,
+  notiIcon,
+  phoneIcon,
 } from '@icons';
 import useAccounts from '@hooks/useAccounts';
-import { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 
 const bannerImage = require('@images/profile_view.png');
 
 const Settings = ({navigation}) => {
-    const isFocused = useIsFocused();
-    const {accountsInfo, isLoading, getAccounts} = useAccounts();
+  const isFocused = useIsFocused();
+  const {accountsInfo, isLoading, getAccounts} = useAccounts();
 
-    useEffect(() => {
-        if (isFocused) {
-            getAccounts();
-        }
-      }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      getAccounts();
+    }
+  }, [isFocused]);
 
   const onPressViewButton = () => {
     navigation.navigate('ProfileDetail', {accountsInfo: accountsInfo});
   };
+
+  if (isLoading) {
+    return <Text>Loading...</Text>;
+  }
+
+  if (!accountsInfo.result || !accountsInfo.result.email) {
+    return <Text>No account information available</Text>;
+  }
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLOR.WHITE_ORANGE}}>
       <BasicHeader title="설정" leftButtonName={'menu'} />
       <Banner
         title={'프로필 보기'}
         titleFontSize={20}
-        content={accountsInfo.email}
+        content={accountsInfo.result.email}
         contentOpacity={0.5}
         source={bannerImage}
         component={

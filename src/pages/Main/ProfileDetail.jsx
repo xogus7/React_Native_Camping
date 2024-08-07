@@ -1,13 +1,17 @@
-import {ProfileBanner} from '@components/Banner';
-import BasicHeader from '@components/BasicHeader';
-import SettingButton from '@components/SettingButton';
-import {COLOR} from '@styles/color';
+import React from 'react';
 import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-
-import {medalIcon, premiumIcon, moreIcon } from '@icons';
+import {COLOR} from '@styles/color';
+import BasicHeader from '@components/BasicHeader';
+import {ProfileBanner} from '@components/Banner';
+import SettingButton from '@components/SettingButton';
+import {medalIcon, premiumIcon, moreIcon} from '@icons';
 
 const ProfileDetail = ({navigation, route}) => {
-    const { accountsInfo } = route.params;
+  const {accountsInfo = {}} = route.params;
+  const {result = {}} = accountsInfo;
+
+  // console.log('Received accountsInfo:', accountsInfo);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: COLOR.WHITE_ORANGE}}>
       <BasicHeader
@@ -18,14 +22,16 @@ const ProfileDetail = ({navigation, route}) => {
       />
 
       <ProfileBanner
-        name={accountsInfo.nickName}
+        name={result.nickName}
         marginTop={32}
-        source={accountsInfo.profileImagePath ?? 'https://avatar.iran.liara.run/public'}
-        content={accountsInfo.introduce ?? '자기소개를 적어주세요!'}
+        source={
+          result.profileImagePath ?? 'https://avatar.iran.liara.run/public'
+        }
+        content={result.introduce ?? '자기소개를 적어주세요!'}
         leftSectionTitle="내가 쓴 글"
-        leftSectionData={accountsInfo.communityCount}
+        leftSectionData={result.communityCount}
         rightSectionTitle="즐겨찾기"
-        rightSectionData={accountsInfo.favoriteCount}
+        rightSectionData={result.favoriteCount}
       />
 
       <View style={{paddingHorizontal: 16, marginTop: 11}}>
@@ -34,7 +40,7 @@ const ProfileDetail = ({navigation, route}) => {
           <SettingButton
             source={medalIcon}
             title="캠핑 기록"
-            rightText={`${accountsInfo.communityCount}`}
+            rightText={`${result.communityCount}`}
           />
           <SettingButton source={moreIcon} title="그외 메뉴들" />
         </View>

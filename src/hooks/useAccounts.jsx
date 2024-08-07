@@ -1,21 +1,37 @@
-import { getAccountsInfo } from "@libs/apis";
-import { useEffect, useState } from "react";
+import {useState, useEffect} from 'react';
+import axios from 'axios';
 
 const useAccounts = () => {
-    useEffect(() => {
-        getAccounts();
+  const [accountsInfo, setAccountsInfo] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-    }, []);
-
-    const getAccounts = async () => {
-        setIsLoading(true);
-        const result = await getAccountsInfo();
-        setAccountsInfo(result ?? []);
-        setIsLoading(false);
+  const getAccounts = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `http://13.209.27.220:8080/accounts/info`,
+      );
+      console.log('API response:', response.data);
+      setAccountsInfo(response.data);
+    } catch (err) {
+      setError(err.message);
+      console.error('API error:', err);
+    } finally {
+      setIsLoading(false);
     }
-    const [accountsInfo, setAccountsInfo] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    return { accountsInfo, isLoading, getAccounts };
+  };
+
+  useEffect(() => {
+    getAccounts();
+  }, []);
+
+  return {
+    accountsInfo,
+    isLoading,
+    error,
+    getAccounts,
+  };
 };
 
 export default useAccounts;
