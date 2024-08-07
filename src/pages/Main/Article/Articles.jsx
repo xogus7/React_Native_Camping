@@ -1,51 +1,49 @@
-import { FlatList, Image, SafeAreaView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { COLOR } from "@styles/color";
-import BasicHeader from "@components/BasicHeader";
-import { Banner } from "@components/Banner";
-import useArticles from "@hooks/useArticles";
-
-import { bookmarkIcon, chevronDownIcon } from '@icons'
-import { dateToString } from "@utils/dateFormat";
-import SortBy from "@components/SortBy";
 import { useEffect, useState } from "react";
+import {
+    FlatList, Image, Pressable, RefreshControl, SafeAreaView,
+    StyleSheet, Text, TouchableOpacity, View
+} from "react-native";
+import { COLOR } from "@styles/color";
+import { Banner } from "@components/Banner";
+import BasicHeader from "@components/BasicHeader";
+import SortBy from "@components/SortBy";
 import SortModal from "@components/SortModal";
+
+import useArticles from "@hooks/useArticles";
+import { postArticleFavorite } from "@libs/apis";
+import { timeToDiffString } from "@utils/dateFormat";
+
+import { bookmarkIcon } from '@icons'
 const bannerImage = require('@images/splash.jpeg');
 const defaultThumbnailImage = require('@images/default_article_thumb.png')
 
-
 const Articles = ({ navigation }) => {
-    const { articles, sortBy, setSortBy, sortTypeList, getArticleList } = useArticles();
+    const { articles, sortBy, setSortBy, sortTypeList, getArticleList, isLoading } = useArticles();
     const [isVisible, setIsVisible] = useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
-    useEffect(()=> {
+    useEffect(() => {
         getArticleList(sortBy)
     }, [sortBy])
 
     const renderItem = ({ item }) => {
+
         const onPressArticle = () =>
-            navigation.navigate('ArticleDetail', { id: item.id });
+            navigation.navigate('ArticleDetail', { item });
 
         return (
-            <TouchableOpacity
+            <Pressable
                 style={{ borderRadius: 8, overflow: 'hidden' }}
                 onPress={onPressArticle}>
 
                 <Image style={{ width: '100%', height: 200 }}
-                    source={defaultThumbnailImage}
+                    source={item.articleImages[0]?.imgPath ?
+                        { uri: `http://${item.articleImages[0].imgPath}` }
+                        : defaultThumbnailImage}
                 />
 
-                <View
-                    style={{
-                        backgroundColor: COLOR.WHITE,
-                        padding: 12,
-                        gap: 8,
-                    }}>
-                    <Text
-                        style={{
-                            color: COLOR.PURPLE,
-                            fontSize: 18,
-                            fontWeight: 'bold',
-                        }}>
+                <View style={{ backgroundColor: COLOR.WHITE, padding: 12, gap: 8 }}>
+                    <Text style={{ color: COLOR.PURPLE, fontSize: 18, fontWeight: 'bold' }}>
                         {item.title}
                     </Text>
                     <Text style={{ color: COLOR.PURPLE }} numberOfLines={2}>
@@ -53,18 +51,35 @@ const Articles = ({ navigation }) => {
                     </Text>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                         <Text style={{ color: COLOR.PURPLE, opacity: 0.5 }}>
-                            {dateToString(item.createDate)}
+                            {timeToDiffString(item.createDate)}
                         </Text>
-                        <Image source={bookmarkIcon} style={{ width: 32, height: 32 }} />
+                        <TouchableOpacity onPress={() => onPressBookmark(item.id)}
+                            style={{
+                                backgroundColor: item.isFavorite ? '#FFED00' : null,
+                                borderRadius: 100,
+                            }}
+                        >
+                            <Image source={bookmarkIcon} style={{ width: 32, height: 32, }} />
+                        </TouchableOpacity>
                     </View>
                 </View>
-            </TouchableOpacity>
+            </Pressable>
         );
     };
 
-    const onPressSort = () => {
-        setIsVisible(true)
+    const onPressSortBy = () => setIsVisible(true);
+
+    const onPressBookmark = async (id) => {
+        const response = await postArticleFavorite(id);
+        console.log(response.success)
+        if (response.success)
+            await getArticleList(sortBy);
     }
+    const onRefresh = () => {
+        setRefreshing(true);
+        getArticleList(sortBy);
+        setRefreshing(false);
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE_ORANGE }}>
@@ -78,8 +93,7 @@ const Articles = ({ navigation }) => {
             />
 
             {/* Sort By */}
-            <SortBy sortBy={sortBy} onPress={onPressSort}/>
-
+            <SortBy sortBy={sortBy} onPress={onPressSortBy} />
 
             {/* List */}
             <FlatList
@@ -88,6 +102,9 @@ const Articles = ({ navigation }) => {
                 data={articles}
                 renderItem={renderItem}
                 scrollEventThrottle={1}
+                refreshControl={
+                    <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+                }
             />
             <SortModal
                 isVisible={isVisible}

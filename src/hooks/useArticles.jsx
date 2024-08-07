@@ -1,24 +1,32 @@
-import { getArticle } from '@libs/apis';
+import { getArticle, getArticleFavorite } from '@libs/apis';
 import { useEffect, useState } from 'react';
 
 const useArticles = () => {
+  const [articles, setArticles] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [sortBy, setSortBy] = useState(sortTypeList[0]);
+  
   useEffect(() => {
     getArticleList(sortBy);
   }, []);
 
   const getArticleList = async (sortBy) => {
     setIsLoading(true);
-    const result = await getArticle(sortBy.value);
-    setArticles(result ?? []);
+    let result = []
+    if (sortBy.name === '즐겨찾기') {
+      result = await getArticleFavorite();
+    }
+    else {
+      result = await getArticle(sortBy.value);
+    }
+    if (result) setArticles(result);
     setIsLoading(false);
   }
 
-  const [articles, setArticles] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [sortBy, setSortBy] = useState(sortTypeList[0]);
-
-  return { articles, isLoading,
-    sortBy, setSortBy, sortTypeList, getArticleList };
+  return {
+    articles, isLoading,
+    sortBy, setSortBy, sortTypeList, getArticleList
+  };
 };
 
 const sortTypeList = [
