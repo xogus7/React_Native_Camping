@@ -6,6 +6,7 @@ const communityOffIcon = require('@icons/bottomtab/community_off.png');
 const communityOnIcon = require('@icons/bottomtab/community_on.png');
 const settingOffIcon = require('@icons/bottomtab/setting_off.png');
 const settingOnIcon = require('@icons/bottomtab/setting_on.png');
+const plusButtonIcon = require('@icons/bottomtab/plus_button.png');
 
 const alramIcon = require('@icons/settings/alram.png');
 const checkIcon = require('@icons/settings/check.png');
@@ -30,7 +31,7 @@ const chevronRightIcon = require('@icons/chevron_right.png')
 const likeOnIcon = require('@icons/like_on.png')
 const replyIcon = require('@icons/reply.png')
 
-export {
+export { plusButtonIcon,
     articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon, 
     communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon,
     alramIcon, checkIcon, listIcon, moreIcon, notiIcon, phoneIcon,

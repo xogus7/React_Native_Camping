@@ -5,14 +5,17 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import BottomTab from '@components/BottomTab';
 import Splash from '@pages/Splash';
 import Introduction from '@pages/Introduction';
-import Camping from '@pages/Main/Camping';
-import Articles from '@pages/Main/Articles';
-import Community from '@pages/Main/Community';
-import Settings from '@pages/Main/Settings';
-import Login from '@pages/Main/Login';
-import Register from '@pages/Main/Register';
-import ProfileDetail from '@pages/Main/ProfileDetail';
-import CampingDetail from '@pages/Main/CampingDetail';
+import Login from '@pages/Main/Auth/Login';
+import Register from '@pages/Main/Auth/Register';
+import Camping from '@pages/Main/Home/Camping';
+import CampingDetail from '@pages/Main/Home/CampingDetail';
+import Articles from '@pages/Main/Article/Articles';
+import ArticleDetail from '@pages/Main/Article/ArticleDetail';
+import Community from '@pages/Main/Community/Community';
+import CommunityDetail from '@pages/Main/Community/CommunityDetail';
+import Settings from '@pages/Main/Setting/Settings';
+import ProfileDetail from '@pages/Main/Setting/ProfileDetail';
+import Add from '@pages/Main/Add';
 
 
 const Stack = createNativeStackNavigator();
@@ -40,9 +43,12 @@ const Router = () => {
       <Stack.Screen name="Introduction" component={Introduction} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="CampingDetail" component={CampingDetail} />
-      <Stack.Screen name="ProfileDetail" component={ProfileDetail} />
       <Stack.Screen name="MainTab" component={MainTab} />
+      <Stack.Screen name="Add" component={Add} />
+      <Stack.Screen name="CampingDetail" component={CampingDetail} />
+      <Stack.Screen name="ArticleDetail" component={ArticleDetail} />
+      <Stack.Screen name="CommunityDetail" component={CommunityDetail} />
+      <Stack.Screen name="ProfileDetail" component={ProfileDetail} />
     </Stack.Navigator>
   );
 };
