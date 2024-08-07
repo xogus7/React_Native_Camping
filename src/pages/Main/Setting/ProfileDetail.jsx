@@ -1,15 +1,16 @@
-import {ProfileBanner} from '@components/Banner';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { ProfileBanner } from '@components/Banner';
 import BasicHeader from '@components/BasicHeader';
 import SettingButton from '@components/SettingButton';
-import {COLOR} from '@styles/color';
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
+import { COLOR } from '@styles/color';
 
-import {medalIcon, premiumIcon, moreIcon } from '@icons';
 
-const ProfileDetail = ({navigation, route}) => {
-    const { accountsInfo } = route.params;
+import { medalIcon, premiumIcon, moreIcon } from '@icons';
+
+const ProfileDetail = ({ navigation, route }) => {
+  const { accountsInfo } = route.params;
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLOR.WHITE_ORANGE}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE_ORANGE }}>
       <BasicHeader
         title="Profile"
         leftButtonName={'back'}
@@ -28,8 +29,8 @@ const ProfileDetail = ({navigation, route}) => {
         rightSectionData={accountsInfo.favoriteCount}
       />
 
-      <View style={{paddingHorizontal: 16, marginTop: 11}}>
-        <View style={{gap: 8}}>
+      <View style={{ paddingHorizontal: 16, marginTop: 11 }}>
+        <View style={{ gap: 8 }}>
           <SettingButton source={premiumIcon} title="프리미엄 전환" />
           <SettingButton
             source={medalIcon}

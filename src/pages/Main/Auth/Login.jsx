@@ -1,19 +1,10 @@
 import React, {useState} from 'react';
 import {
-  Image,
-  ImageBackground,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  Dimensions,
-  KeyboardAvoidingView,
-  ScrollView,
-  Pressable,
+  Image, ImageBackground, StyleSheet, Text, TextInput, TouchableOpacity,
+  View, Dimensions, KeyboardAvoidingView, ScrollView, Pressable,
 } from 'react-native';
-import {swaggerInstance} from '@libs/apis';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
+import {swaggerInstance} from '@libs/apis';
 import TextButton from '@components/TextButton';
 
 const loginimg = require('@images/Loginimg.png');

@@ -1,33 +1,29 @@
-import {SafeAreaView, StyleSheet, Text, View} from 'react-native';
-import {COLOR} from '@styles/color';
+import { useEffect } from 'react';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { useIsFocused } from '@react-navigation/native';
+import { COLOR } from '@styles/color';
+import { Banner } from '@components/Banner';
 import BasicHeader from '@components/BasicHeader';
-import {Banner} from '@components/Banner';
 import TextButton from '@components/TextButton';
 import SettingButton from '@components/SettingButton';
-
-import { alramIcon, checkIcon, listIcon, moreIcon, notiIcon, phoneIcon,
-} from '@icons';
 import useAccounts from '@hooks/useAccounts';
-import { useEffect } from 'react';
-import { useIsFocused } from '@react-navigation/native';
 
+import { alramIcon, checkIcon, listIcon, moreIcon, notiIcon, phoneIcon } from '@icons';
 const bannerImage = require('@images/profile_view.png');
 
-const Settings = ({navigation}) => {
-    const isFocused = useIsFocused();
-    const {accountsInfo, isLoading, getAccounts} = useAccounts();
+const Settings = ({ navigation }) => {
+  const isFocused = useIsFocused();
+  const { accountsInfo, getAccounts } = useAccounts();
 
-    useEffect(() => {
-        if (isFocused) {
-            getAccounts();
-        }
-      }, [isFocused]);
+  useEffect(() => {
+    if (isFocused) {
+      getAccounts();
+    }
+  }, [isFocused]);
 
-  const onPressViewButton = () => {
-    navigation.navigate('ProfileDetail', {accountsInfo: accountsInfo});
-  };
+  const onPressViewButton = () => navigation.navigate('ProfileDetail', { accountsInfo });
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLOR.WHITE_ORANGE}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLOR.WHITE_ORANGE }}>
       <BasicHeader title="설정" leftButtonName={'menu'} />
       <Banner
         title={'프로필 보기'}
@@ -45,9 +41,9 @@ const Settings = ({navigation}) => {
           />
         }
       />
-      <View style={{paddingHorizontal: 16}}>
+      <View style={{ paddingHorizontal: 16 }}>
         <Text style={styles.sectionText}>일반</Text>
-        <View style={{gap: 8}}>
+        <View style={{ gap: 8 }}>
           <SettingButton
             source={alramIcon}
             title="알람"
@@ -60,7 +56,7 @@ const Settings = ({navigation}) => {
           />
         </View>
         <Text style={styles.sectionText}>Support</Text>
-        <View style={{gap: 8}}>
+        <View style={{ gap: 8 }}>
           <SettingButton source={phoneIcon} title="문의하기" />
           <SettingButton source={listIcon} title="자주묻는질문" />
           <SettingButton source={checkIcon} title="개인정보처리방침" />

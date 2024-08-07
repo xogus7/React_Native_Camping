@@ -4,7 +4,8 @@ import { COLOR } from '@styles/color';
 import { backIcon, menuIcon, searchIcon, bookmarkIcon, editIcon } from '@icons'
 
 const BasicHeader = ({ title, leftButtonName, rightButtonName,
-    rightImageUrl, onPressLeftButton, onPressRightButton }) => {
+    rightImageUrl, onPressLeftButton, onPressRightButton,
+    rightButtonSize }) => {
 
     const renderImage = (name) => {
         switch (name) {
@@ -26,7 +27,8 @@ const BasicHeader = ({ title, leftButtonName, rightButtonName,
             {title && <Text style={styles.headerTitle}>{title}</Text>}
             {rightButtonName &&
                 <TouchableOpacity onPress={onPressRightButton} style={styles.rightButton} >
-                    <Image source={renderImage(rightButtonName)} style={{ width: '100%', height: '100%' }} />
+                    <Image source={renderImage(rightButtonName)}
+                    style={{ width: rightButtonSize ?? '100%', height: rightButtonSize ?? '100%' }} />
                 </TouchableOpacity>
             }
             {rightImageUrl &&

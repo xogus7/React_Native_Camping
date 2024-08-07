@@ -1,13 +1,16 @@
 import React, { useRef } from 'react';
-import { View, TouchableOpacity, Animated, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, Animated, StyleSheet, Image, useWindowDimensions } from 'react-native';
 import {
     articlesOffIcon, articlesOnIcon, campingOffIcon, campingOnIcon,
-    communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon
+    communityOffIcon, communityOnIcon, settingOffIcon, settingOnIcon,
+    plusButtonIcon
 } from '@icons'
 
 const bottomTabBackgroundImage = require('@images/bottomtab_background.png')
 
 const BottomTab = ({ state, navigation, insets, descriptors }) => {
+    const { width } = useWindowDimensions();
+    const height = 70;
 
     const tab1Value = useRef(new Animated.Value(0)).current;
     const tab2Value = useRef(new Animated.Value(0)).current;
@@ -29,12 +32,32 @@ const BottomTab = ({ state, navigation, insets, descriptors }) => {
         4: tab5Value,
     };
 
+    const onPressAddButton = () => navigation.navigate('Add');
+
     return (
         <View style={[styles.bottomTabBarWrapper]}>
             <Image source={bottomTabBackgroundImage}
                 style={styles.bottomTabBackground}
                 resizeMode='contain'
             />
+            <TouchableOpacity
+                onPress={onPressAddButton}
+                style={{
+                    position: 'absolute',
+                    left: width / 2 - 64 / 2,
+                    bottom: height - 20,
+                    width: 64,
+                    height: 64,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    borderRadius: 100,
+                }}
+            >
+                <Image
+                    source={plusButtonIcon}
+                    style={{ width: '100%', height: '100%', resizeMode: 'contain' }}
+                />
+            </TouchableOpacity>
             {
                 state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
@@ -103,6 +126,10 @@ const BottomTab = ({ state, navigation, insets, descriptors }) => {
         </View>
     )
 }
+
+
+
+
 
 const styles = StyleSheet.create({
     bottomTabBarWrapper: {

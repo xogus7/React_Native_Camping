@@ -9,9 +9,10 @@ const Introduction = ({ navigation }) => {
     const [itemWidth, setItemWidth] = useState(0);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onPressSkipButton = () => { 
-        postAuth();
-        navigation.navigate('MainTab'); };
+    const onPressSkipButton = async () => {
+        const response = await postAuth();
+        if (response.success) navigation.navigate('MainTab');
+    };
     const onPressNextButton = () => { if (currentIndex < 3) setCurrentIndex(currentIndex + 1) };
     const onPressStartButton = () => { navigation.navigate('Login') };
     const indexToOffset = () => { return { x: currentIndex * itemWidth, y: 0 } };
@@ -20,7 +21,7 @@ const Introduction = ({ navigation }) => {
         const { title, image, description } = item;
         return (
             <View style={{ width, alignItems: 'center' }}>
-                <Text style={{ color: COLOR.PURPLE, fontSize: 32, fontWeight: '700', marginTop: 80 }}>
+                <Text style={{ color: COLOR.PURPLE, fontSize: 32, fontWeight: '700', marginTop: 50 }}>
                     {title}
                 </Text>
                 <Image

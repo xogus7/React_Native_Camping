@@ -1,6 +1,6 @@
 import {COLOR} from '@styles/color';
 import {Image, StyleSheet, Text, View} from 'react-native';
-import {clockIcon, bookmarkIcon} from '@icons/index';
+import {clockIcon, bookmarkIcon} from '@icons';
 
 export const Banner = ({
   title,
