@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { getCampsiteData } from '@libs/apis';
+import { getCampsiteData, getCampsiteDataLocation } from '@libs/apis';
 
 const useCampsiteList = () => {
     useEffect(() => {
-        getCampsiteList(1);
+        getCampsiteList(1, sortBy);
     }, []);
 
     const [campsiteList, setCampsiteList] = useState([]);
@@ -11,29 +11,36 @@ const useCampsiteList = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [sortBy, setSortBy] = useState(sortTypeList[0]);
 
-    const getCampsiteList = async (page) => {
+    const getCampsiteList = async (page, sortBy) => {
         setIsLoading(true);
-        const item = await getCampsiteData(page);
+        let item = [];
+        if (sortBy.name === '기본순') {
+            item = await getCampsiteData(page);
+        }
+        else { item = await getCampsiteDataLocation(page); }
         if (item) {
             setCampsiteList(item);
             setCurrentPage(page);
-        } else { console.warn("item: " + item) }
+        } else { console.warn("item: " + item); }
         setIsLoading(false);
     };
 
-    const loadNextPageCampsiteList = async () => {
+    const loadNextPageCampsiteList = async (sortBy) => {
         const nextPage = currentPage + 1;
-        const item = await getCampsiteData(nextPage);
+        let item = [];
+        if (sortBy.name === '기본순') {
+            item = await getCampsiteData(nextPage);
+        }
+        else { item = await getCampsiteDataLocation(nextPage); }
         if (!item) return;
         setCampsiteList([...campsiteList, ...item]);
         setCurrentPage(nextPage);
     };
 
-    const refreshCampsiteList = () => {
-        getCampsiteList(1);
-    };
+    const refreshCampsiteList = () => getCampsiteList(1, sortBy);
 
-    return { isLoading, campsiteList, currentPage,
+    return {
+        isLoading, campsiteList, currentPage,
         loadNextPageCampsiteList,
         refreshCampsiteList,
         sortBy,
@@ -44,13 +51,13 @@ const useCampsiteList = () => {
 
 const sortTypeList = [
     {
-      value: 'BASED',
-      name: '기본순',
+        value: 'BASED',
+        name: '기본순',
     },
     {
-      value: 'LOCATION',
-      name: '거리순',
+        value: 'LOCATION',
+        name: '거리순',
     },
-  ];
+];
 
 export default useCampsiteList;

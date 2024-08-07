@@ -1,30 +1,21 @@
-import TextButton from '@components/TextButton';
-import { COLOR } from '@styles/color';
 import React, { useCallback } from 'react';
 import {
     Image, Linking, SafeAreaView, ScrollView, StyleSheet,
-    Text, View, useWindowDimensions } from 'react-native';
+    Text, View, useWindowDimensions
+} from 'react-native';
+import { COLOR } from '@styles/color';
 import BasicHeader from '@components/BasicHeader';
+import TextButton from '@components/TextButton';
 
 const CampingDetail = ({ navigation, route }) => {
     const { width } = useWindowDimensions();
-    const {
-        firstImageUrl,
-        facltNm,
-        intro,
-        featureNm,
-        caravInnerFclty,
-        addr1,
-        facltDivNm,
-        mangeDivNm,
-        resveCl,
-        tel,
+    const { firstImageUrl, facltNm, intro, featureNm, caravInnerFclty,
+        addr1, facltDivNm, mangeDivNm, resveCl, tel
     } = route.params;
 
     const onPressCall = useCallback(() => {
         Linking.openURL(`tel:${tel}`).catch(error => {
             console.warn(error);
-            //TODO: error
         });
     }, [tel]);
 
@@ -38,19 +29,15 @@ const CampingDetail = ({ navigation, route }) => {
                 onPressLeftButton={onPressBackButton}
             />
 
-            {/* Image */}
             <Image style={{ width, height: 250 }} source={{ uri: firstImageUrl }} />
 
-            {/* Info */}
             <ScrollView
                 style={{ flex: 1, backgroundColor: COLOR.WHITE }}
                 contentContainerStyle={{ padding: 16 }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 32 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'center', alignItems: 'center', gap: 4 }}>
                         <Text style={styles.divNm}>{facltDivNm}</Text>
-                        <View
-                            style={{ height: 8, width: 1, backgroundColor: '#C3C3C3' }}
-                        />
+                        <View style={{ height: 8, width: 1, backgroundColor: '#C3C3C3' }} />
                         <Text style={styles.divNm}>{mangeDivNm}</Text>
                     </View>
                     <Text style={{ color: '#919191', fontWeight: 700 }}>{resveCl}</Text>
@@ -68,7 +55,6 @@ const CampingDetail = ({ navigation, route }) => {
                 <Text style={styles.text}>{(intro || featureNm) ?? '소개 및 안내 정보가 없습니다.'}</Text>
             </ScrollView>
 
-            {/* Call Button */}
             <View style={{ padding: 16 }}>
                 <TextButton
                     text="전화하기"
