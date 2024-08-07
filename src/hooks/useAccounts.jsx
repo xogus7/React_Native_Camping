@@ -10,7 +10,7 @@ const useAccounts = () => {
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `http://13.209.27.220:8080/accounts/info`,
+        `${REACT_APP_SWAGGER_URL}/accounts/info`,
       );
       console.log('API response:', response.data);
       setAccountsInfo(response.data);
