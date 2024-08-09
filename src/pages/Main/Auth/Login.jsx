@@ -6,6 +6,7 @@ import {
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import {swaggerInstance} from '@libs/apis';
 import TextButton from '@components/TextButton';
+import { COLOR } from '@styles/color';
 
 const loginimg = require('@images/Loginimg.png');
 const loginGoogle = require('@icons/login/GoogleIcon.png');
@@ -67,6 +68,10 @@ const Login = ({navigation}) => {
               <Text style={styles.loginContainerTitle}>
                 이메일로 로그인하기
               </Text>
+              <View style={{ width:width, height: 1,
+                backgroundColor: COLOR.WHITE_ORANGE,
+                marginTop: 8,
+                marginBottom: 12}} />
               <View style={styles.loginForm}>
                 {!email ? (
                   <Image source={emailoff} style={styles.emailIcon} />
@@ -76,7 +81,7 @@ const Login = ({navigation}) => {
                 <TextInput
                   style={styles.loginInput}
                   placeholder="email"
-                  placeholderTextColor="#573353"
+                  placeholderTextColor={COLOR.PURPLE}
                   value={email}
                   onChangeText={setEmail}
                   keyboardType="email-address"
@@ -93,15 +98,15 @@ const Login = ({navigation}) => {
                 <TextInput
                   style={styles.loginInput}
                   placeholder="password"
-                  placeholderTextColor="#573353"
+                  placeholderTextColor={COLOR.PURPLE}
                   value={password}
                   secureTextEntry={isVisible}
                   onChangeText={setPassword}
                   autoCapitalize="none"
                 ></TextInput>
                 <View style={{position: 'absolute', right: 10, top: 15}}>
-                <TextButton text={'show'}
-                  fontWeight={500}
+                <TextButton text={'Show'}
+                  fontWeight={1}
                   textDecorationLine={'underline'}
                   onPress={()=> setIsVisible(!isVisible)}
                   />
@@ -114,9 +119,9 @@ const Login = ({navigation}) => {
                   style={{width: 24, height: 24}}>
                   <AnimatedCheckbox
                     checked={checked}
-                    highlightColor="#FDA758"
-                    checkmarkColor="#573353"
-                    boxOutlineColor="#FDA758"
+                    highlightColor={COLOR.ORANGE}
+                    checkmarkColor={COLOR.PURPLE}
+                    boxOutlineColor={COLOR.ORANGE}
                   />
                 </Pressable>
                 <Text style={styles.autoLoginText}>자동 로그인</Text>
@@ -150,9 +155,9 @@ const styles = StyleSheet.create({
   welcomMessage: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#573353',
+    color: COLOR.PURPLE,
     marginBottom: 73,
-    marginTop: 230,
+    marginTop: 200,
   },
   socialLoginContainer: {
     gap: 8,
@@ -161,7 +166,7 @@ const styles = StyleSheet.create({
   socialLoginWrapper: {
     flexDirection: 'row',
     gap: 24,
-    backgroundColor: '#fff',
+    backgroundColor: COLOR.WHITE,
     width: 374,
     height: 50,
     alignItems: 'center',
@@ -169,23 +174,23 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   socialLoginText: {
-    color: '#573353',
+    color: COLOR.PURPLE,
     fontSize: 16,
     fontWeight: '700',
   },
   loginContainer: {
-    backgroundColor: '#fff',
     marginTop: 25,
     width: width,
     flex: 1,
     alignItems: 'center',
     borderTopLeftRadius: 18,
     borderTopRightRadius: 18,
+    gap: 8,
+    backgroundColor: COLOR.WHITE,
   },
   loginContainerTitle: {
-    marginBottom: 28,
     marginTop: 12,
-    color: '#573353',
+    color: COLOR.PURPLE,
     fontSize: 16,
     fontWeight: '500',
   },
@@ -198,7 +203,6 @@ const styles = StyleSheet.create({
     width: 15,
     height: 12,
     left: 24,
-    bottom: 40,
     zIndex: 2,
   },
   passwordIcon: {
@@ -206,16 +210,14 @@ const styles = StyleSheet.create({
     width: 12,
     height: 16,
     left: 24,
-    bottom: 40,
     zIndex: 2,
   },
   loginInput: {
     width: 374,
     height: 56,
-    backgroundColor: '#FFF6ED',
+    backgroundColor: COLOR.WHITE_ORANGE,
     paddingLeft: 64,
-    marginBottom: 20,
-    color: '#FDA758',
+    color: COLOR.ORANGE,
     fontWeight: '600',
     fontSize: 16,
     borderRadius: 12,
@@ -225,18 +227,18 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-Start',
     flexDirection: 'row',
     gap: 11,
-    marginBottom: 24,
+    marginVertical: 18,
     width: 356,
   },
   autoLoginText: {
     fontWeight: '500',
     fontSize: 16,
-    color: '#573353',
+    color: COLOR.PURPLE,
   },
   loginButton: {
     width: 374,
     height: 60,
-    backgroundColor: '#FDA758',
+    backgroundColor: COLOR.ORANGE,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
@@ -246,19 +248,19 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
   registerWrapper: {
-    marginTop: 18,
+    marginVertical: 10,
     flexDirection: 'row',
     gap: 2,
   },
   registerText1: {
     fontSize: 14,
     fontWeight: '500',
-    color: '#573353',
+    color: COLOR.PURPLE,
   },
   registerText2: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#573353',
+    color: COLOR.PURPLE,
   },
 });
 
