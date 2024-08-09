@@ -14,7 +14,7 @@ import { postArticleFavorite } from "@libs/apis";
 import { timeToDiffString } from "@utils/dateFormat";
 
 import { bookmarkIcon } from '@icons'
-const bannerImage = require('@images/splash.jpeg');
+const bannerImage = require('@images/splash.png');
 const defaultThumbnailImage = require('@images/default_article_thumb.png')
 
 const Articles = ({ navigation }) => {
