@@ -11,7 +11,7 @@ const Introduction = ({ navigation }) => {
 
     const onPressSkipButton = async () => {
         const response = await postAuth();
-        if (response.success) navigation.navigate('MainTab');
+        if (response.data.success) navigation.navigate('MainTab');
     };
     const onPressNextButton = () => { if (currentIndex < 3) setCurrentIndex(currentIndex + 1) };
     const onPressStartButton = () => { navigation.navigate('Login') };

@@ -2,9 +2,11 @@ import { getAccountsInfo } from "@libs/apis";
 import { useEffect, useState } from "react";
 
 const useAccounts = () => {
+    const [accountsInfo, setAccountsInfo] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         getAccounts();
-
     }, []);
 
     const getAccounts = async () => {
@@ -13,8 +15,7 @@ const useAccounts = () => {
         setAccountsInfo(result ?? []);
         setIsLoading(false);
     }
-    const [accountsInfo, setAccountsInfo] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+
     return { accountsInfo, isLoading, getAccounts };
 };
 
