@@ -5,6 +5,8 @@ import {
 } from 'react-native';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
 import { swaggerInstance } from '@libs/apis';
+import { COLOR } from '@styles/color';
+import TextButton from '@components/TextButton';
 
 const registerImg = require('@images/signup.png');
 const useroff = require('@icons/register/user-off.png');
@@ -22,6 +24,7 @@ const Register = ({ navigation }) => {
   const [nickname, setNickname] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [checked, setChecked] = useState(false);
+  const [isVisible, setIsVisible] = useState(true)
 
   const postregister = async () => {
     const registerData = { email, password, nickname, phoneNumber };
@@ -65,7 +68,7 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.registerTextInput}
                 placeholder="nickname"
-                placeholderTextColor="#573353"
+                placeholderTextColor={COLOR.PURPLE}
                 value={nickname}
                 onChangeText={setNickname}
                 keyboardType="email-address"
@@ -84,7 +87,7 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.registerTextInput}
                 placeholder="email"
-                placeholderTextColor="#573353"
+                placeholderTextColor={COLOR.PURPLE}
                 value={email}
                 onChangeText={setEmail}
                 keyboardType="email-address"
@@ -103,12 +106,19 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.registerTextInput}
                 placeholder="password"
-                placeholderTextColor="#573353"
+                placeholderTextColor={COLOR.PURPLE}
                 value={password}
-                secureTextEntry
+                secureTextEntry={isVisible}
                 onChangeText={setPassword}
                 autoCapitalize="none"
               />
+              <View style={{position: 'absolute', right: 10, top: 15}}>
+                <TextButton text={'Show'}
+                  fontWeight={1}
+                  textDecorationLine={'underline'}
+                  onPress={()=> setIsVisible(!isVisible)}
+                  />
+                </View>
             </View>
 
             <View style={styles.registerForm}>
@@ -122,7 +132,7 @@ const Register = ({ navigation }) => {
               <TextInput
                 style={styles.registerTextInput}
                 placeholder="phoneNumber"
-                placeholderTextColor="#573353"
+                placeholderTextColor={COLOR.PURPLE}
                 value={phoneNumber}
                 onChangeText={setPhoneNumber}
                 autoCapitalize="none"
@@ -136,9 +146,9 @@ const Register = ({ navigation }) => {
               style={{ width: 24, height: 24 }}>
               <AnimatedCheckbox
                 checked={checked}
-                highlightColor="#FDA758"
-                checkmarkColor="#573353"
-                boxOutlineColor="#FDA758"
+                highlightColor={COLOR.ORANGE}
+                checkmarkColor={COLOR.PURPLE}
+                boxOutlineColor={COLOR.ORANGE}
               />
             </Pressable>
             <Text style={styles.agreementText}>약관 동의</Text>
@@ -149,6 +159,25 @@ const Register = ({ navigation }) => {
             style={styles.resgiterButton}>
             <Text style={styles.createAccount}>회원가입하기</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.goBack()}
+            style={{
+              marginTop: 18,
+              flexDirection: 'row',
+              gap: 2,
+            }}>
+            <Text style={{
+              fontSize: 14,
+              fontWeight: '500',
+              color: COLOR.PURPLE,
+            }}>회원이세요?
+            </Text>
+            <Text style={{
+              fontSize: 14,
+              fontWeight: '700',
+              color: COLOR.PURPLE,
+            }}>로그인</Text>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
@@ -158,7 +187,7 @@ const Register = ({ navigation }) => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    backgroundColor: '#FFF3E9',
+    backgroundColor: COLOR.WHITE_ORANGE,
     alignItems: 'center',
   },
   registerImg: {
@@ -170,7 +199,7 @@ const styles = StyleSheet.create({
     marginTop: 21,
     fontWeight: '700',
     fontSize: 24,
-    color: '#573353',
+    color: COLOR.PURPLE,
   },
   regsiterContainer: {
     marginTop: 32,
@@ -180,22 +209,26 @@ const styles = StyleSheet.create({
   registerForm: {
     flexDirection: 'row',
     gap: 1,
+    borderRadius: 18,
   },
   resgisterIcon: {
     width: 49,
     height: 50,
-    backgroundColor: '#fff',
+    backgroundColor: COLOR.WHITE,
     alignItems: 'center',
     justifyContent: 'center',
+    borderTopLeftRadius: 12,
+    borderBottomLeftRadius: 12,
   },
   registerTextInput: {
     width: 325,
     height: 50,
-    backgroundColor: '#fff',
-    marginBottom: 20,
-    paddingLeft: 16,
+    backgroundColor: COLOR.WHITE,
     color: '#FDA758',
     fontWeight: '500',
+    borderTopRightRadius: 12,
+    borderBottomRightRadius: 12,
+    marginBottom: 8,
   },
   agreementWrapper: {
     alignItems: 'center',
@@ -208,12 +241,12 @@ const styles = StyleSheet.create({
   agreementText: {
     fontWeight: '500',
     fontSize: 16,
-    color: '#573353',
+    color: COLOR.PURPLE,
   },
   resgiterButton: {
     width: 374,
     height: 60,
-    backgroundColor: '#FDA758',
+    backgroundColor: COLOR.ORANGE,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 8,
