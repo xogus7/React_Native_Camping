@@ -4,7 +4,7 @@ import {
   Text, TextInput, TouchableOpacity, View,
 } from 'react-native';
 import AnimatedCheckbox from 'react-native-checkbox-reanimated';
-import { swaggerInstance } from '@libs/apis';
+import { swaggerInstance } from '@utils/apisInstanace';
 import { COLOR } from '@styles/color';
 import TextButton from '@components/TextButton';
 
